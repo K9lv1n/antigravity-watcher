@@ -5,16 +5,16 @@
 
 ## WHAT THIS DOES
 
-You type a prompt in Antigravity IDE and hit submit.  
-You switch to your browser and do other things.  
-When Antigravity finishes — your screen automatically jumps back to Antigravity.  
-You don't have to keep checking. It tells you when it's done.
+You type a prompt in Antigravity IDE and hit submit.
+You switch to your browser and do other things.
+When Antigravity finishes — your screen automatically jumps back to Antigravity, full screen.
+You don't have to keep checking. It comes to you.
 
 ---
 
 ## BEFORE YOU START — What you need
 
-- A computer running Windows, Mac, or Linux
+- A computer running Windows 10 or 11
 - Antigravity IDE installed and working
 - An internet connection (just for the setup steps)
 - About 15 minutes
@@ -25,7 +25,6 @@ You don't have to keep checking. It tells you when it's done.
 
 Python is the language the script is written in. You need it installed first.
 
-### Windows:
 1. Open your browser and go to: **https://www.python.org/downloads/**
 2. Click the big yellow **"Download Python"** button
 3. Open the downloaded file
@@ -33,36 +32,18 @@ Python is the language the script is written in. You need it installed first.
 5. Click **"Install Now"**
 6. Wait for it to finish, then click **Close**
 
-### Mac:
-1. Go to: **https://www.python.org/downloads/**
-2. Click the big yellow **"Download Python"** button
-3. Open the downloaded `.pkg` file
-4. Click **Continue** through all the steps, then **Install**
-5. Type your Mac password if it asks
-
-### Linux:
-Open Terminal and type this, then press Enter:
-```
-sudo apt install python3 python3-pip
-```
-Type your password and press Enter when asked.
-
 ---
 
 ## PART 2 — CHECK PYTHON IS WORKING
 
-1. On **Windows**: Press the Windows key, type `cmd`, press Enter. This opens a black window called Command Prompt.
-   On **Mac**: Press `Cmd + Space`, type `Terminal`, press Enter.
-   On **Linux**: Press `Ctrl + Alt + T`.
-
-2. In that black/white window, type exactly this and press Enter:
+1. Press the Windows key, type `cmd`, press Enter — this opens Command Prompt (a black window)
+2. Type exactly this and press Enter:
 ```
 python --version
 ```
-
 3. You should see something like: `Python 3.12.0`
    If you see that — ✅ Python is working. Move to Part 3.
-   If you see an error — try typing `python3 --version` instead.
+   If you see an error — uninstall Python and reinstall it, making sure to tick "Add Python to PATH"
 
 ---
 
@@ -70,22 +51,9 @@ python --version
 
 Libraries are extra tools Python needs to run the script.
 
-In the same Command Prompt / Terminal window, type this and press Enter:
-
-**Windows:**
+In Command Prompt, type this and press Enter:
 ```
-pip install Pillow pygetwindow pyautogui
-```
-
-**Mac:**
-```
-pip3 install Pillow pygetwindow pyautogui
-```
-
-**Linux:**
-```
-pip3 install Pillow pyautogui
-sudo apt install wmctrl xdotool
+pip install Pillow pygetwindow pyautogui opencv-python
 ```
 
 You will see a lot of text scrolling — that is normal. Wait until it stops and you see a `>` cursor again.
@@ -94,35 +62,20 @@ You will see a lot of text scrolling — that is normal. Wait until it stops and
 
 ## PART 4 — CREATE A FOLDER FOR THE PROJECT
 
-This keeps everything organised in one place.
-
-### Windows:
 1. Open **File Explorer** (the folder icon on your taskbar)
-2. Click on your **Documents** folder on the left
+2. Click on your **Desktop** or **Documents** folder on the left
 3. Right-click in the empty space → **New** → **Folder**
 4. Name it: `antigravity-watcher`
-
-### Mac:
-1. Open **Finder**
-2. Click **Documents** on the left
-3. Right-click in the empty space → **New Folder**
-4. Name it: `antigravity-watcher`
-
-### Linux:
-In Terminal, type:
-```
-mkdir ~/Documents/antigravity-watcher
-```
 
 ---
 
 ## PART 5 — INSTALL VS CODE (if you don't have it)
 
-VS Code is where you will put the script file. It is free.
+VS Code is a free code editor where you will keep the script.
 
 1. Go to: **https://code.visualstudio.com/**
-2. Click the big **Download** button for your OS
-3. Open the downloaded file and install it (click Next/Continue through everything)
+2. Click the big **Download** button
+3. Open the downloaded file and install it (click Next through everything)
 4. Open VS Code when done
 
 ---
@@ -131,127 +84,136 @@ VS Code is where you will put the script file. It is free.
 
 1. Open VS Code
 2. Click **File** in the top menu → **Open Folder**
-3. Navigate to your **Documents** folder → click `antigravity-watcher` → click **Select Folder** (Windows) or **Open** (Mac)
-4. You will see your empty folder appear in the left panel of VS Code
+3. Navigate to where you made `antigravity-watcher` → click it → click **Select Folder**
+4. You will see your empty folder appear in the left panel
 
 ---
 
 ## PART 7 — CREATE THE SCRIPT FILE IN VS CODE
 
 1. In VS Code, look at the left panel — you will see `ANTIGRAVITY-WATCHER` at the top
-2. Click the **New File** icon (it looks like a page with a + sign) next to that folder name
-3. Name the file: `antigravity_watcher.py` (make sure you include the `.py` at the end)
+2. Click the **New File** icon (page with a + sign) next to that folder name
+3. Name the file: `antigravity_watcher.py` (include the `.py` at the end)
 4. Press Enter
-
-5. Now paste the script code into that empty file
-   - Click inside the file area (the big empty white/dark space on the right)
-   - Press `Ctrl+A` to select all (in case there's anything there)
-   - Then paste the code with `Ctrl+V`
-
+5. Paste the script code into that empty file:
+   - Click inside the big empty space on the right
+   - Press `Ctrl+A` to select all
+   - Paste the code with `Ctrl+V`
 6. Press `Ctrl+S` to save
-
-The file should now show `antigravity_watcher.py` in the left panel.
 
 ---
 
 ## PART 8 — OPEN THE TERMINAL INSIDE VS CODE
 
-You don't need to leave VS Code to run the script. VS Code has a built-in terminal.
-
-1. Press `` Ctrl+` `` (that's the backtick key, to the left of the 1 key on your keyboard)
+1. Press `` Ctrl+` `` (the backtick key, left of the 1 key)
    Or click **Terminal** in the top menu → **New Terminal**
-
-2. A panel will appear at the bottom of VS Code. This is your terminal.
-
-3. Type this and press Enter to go to your folder:
-   **Windows:** `cd Documents\antigravity-watcher`
-   **Mac/Linux:** `cd ~/Documents/antigravity-watcher`
+2. A panel appears at the bottom — this is your terminal
+3. Navigate to your folder by typing and pressing Enter:
+```
+cd Desktop\antigravity-watcher
+```
+(or `cd Documents\antigravity-watcher` if you put it there)
 
 ---
 
-## PART 9 — FIND YOUR ANTIGRAVITY WINDOW NAME
+## PART 9 — ONE-TIME SETUP: CAPTURE YOUR "DONE" TEMPLATE
 
-The script needs to know the exact name of your Antigravity IDE window.
+This is the most important step. You are teaching the script what Antigravity looks like when it has **truly finished** a prompt.
 
-In the VS Code terminal, type this and press Enter:
+**Before doing this:**
+- Open Antigravity IDE
+- Run a prompt and wait for it to fully finish
+- Leave it showing the completed/done state — do NOT start a new prompt
 
-**Windows/Linux:**
+In the VS Code terminal, type:
+```
+python antigravity_watcher.py --capture-done
+```
+
+**What happens next:**
+1. Read the instructions in the terminal
+2. Press Enter
+3. You have **5 seconds** to click on Antigravity in your taskbar — do it quickly
+4. Your screen goes dark with a crosshair cursor
+5. Drag a box around the element that shows Antigravity is done
+
+**What to drag around (pick ONE small thing):**
+- The send/submit button (it disappears while generating, reappears when done)
+- A checkmark or tick icon that appears when done
+- The text input box becoming active/usable again
+- Any small UI element that is ABSENT while generating and APPEARS when done
+
+**Do NOT drag around:**
+- The whole screen
+- The output/response text (it changes every time)
+- Anything that moves or changes during generation
+
+6. Release the mouse — the overlay closes and saves `done_template.png` automatically
+7. The terminal will say if the template was verified successfully
+
+---
+
+## PART 10 — CHECK YOUR WINDOW NAME
+
+In the VS Code terminal, type:
 ```
 python antigravity_watcher.py --list-windows
 ```
-**Mac:**
-```
-python3 antigravity_watcher.py --list-windows
-```
 
-You will see a list like:
+You will see something like:
 ```
-── Open Windows ──────────────────────────────────
+-- All Open Windows ------------------------------------------
   'Antigravity - my-project'
   'Google Chrome'
-  'Visual Studio Code'
-──────────────────────────────────────────────────
+  'Visual Studio Code - antigravity_watcher.py'
+--------------------------------------------------------------
 ```
 
-Look for anything that says **Antigravity** in the list. Write down exactly what it says.
-
-If it says `Antigravity` or `Antigravity IDE` — you don't need to change anything.
-If it says something different like `AG Studio` — you will need to use `--window "AG Studio"` when you run the script (see Part 10).
+Look for the Antigravity window. If it contains the word `Antigravity` you don't need to change anything. If it shows a completely different name like `AG Studio`, note it down — you'll need `--window "AG Studio"` when running.
 
 ---
 
-## PART 10 — RUN THE SCRIPT
+## PART 11 — RUN THE SCRIPT
 
-Make sure Antigravity IDE is open first.
+Make sure Antigravity IDE is already open before running.
 
-In the VS Code terminal, type:
-
-**Windows:**
 ```
 python antigravity_watcher.py
 ```
 
-**Mac/Linux:**
-```
-python3 antigravity_watcher.py
-```
-
 You will see:
 ```
-🚀 Antigravity Watcher Started
-   Looking for window : 'Antigravity'
++------------------------------------------+
+|   ANTIGRAVITY WATCHER  v4                |
+|   Template Matching Edition              |
++------------------------------------------+
 
-✅ Found window at rect: (0, 0, 1920, 1080)
+  Antigravity window handle locked: 12345678
 
-⏳ Watching for you to submit a prompt...
-   (Type your prompt in Antigravity and hit Enter/Submit)
+==================================================
+  STEP 1 → Type your prompt in Antigravity IDE
+  STEP 2 → Hit submit
+  STEP 3 → Come back here and press Enter
+==================================================
 ```
 
-**The script is now running and watching.**
+---
+
+## PART 12 — USE IT (every time)
+
+```
+1. Type your prompt in Antigravity and hit submit
+2. Come back to the VS Code terminal and press Enter
+3. Switch to your browser — do whatever you want
+4. Antigravity pops back up full screen when the prompt finishes
+5. Press Enter in the terminal again for your next prompt
+```
 
 ---
 
-## PART 11 — USE IT
+## PART 13 — MAKE IT START AUTOMATICALLY
 
-1. Switch to Antigravity IDE
-2. Type your prompt and hit submit
-3. Immediately switch to your browser — do whatever you want
-4. When the script detects the response is done, it will:
-   - Snap your screen back to Antigravity
-   - Play a sound (if you used `--sound`)
-   - Show a notification
-
-5. To run again for your next prompt, go back to the terminal and press the **Up arrow** key to get the last command, then press Enter.
-
----
-
-## PART 12 — MAKE IT START AUTOMATICALLY (so you never have to think about it)
-
----
-
-### WINDOWS — Task Scheduler
-
-This makes the script run automatically every time you turn on your computer.
+This makes the script start every time you log into Windows so you never have to run it manually.
 
 1. Press the **Windows key** on your keyboard
 2. Type `Task Scheduler` and press Enter
@@ -259,95 +221,90 @@ This makes the script run automatically every time you turn on your computer.
 4. **Name:** Type `Antigravity Watcher` → click **Next**
 5. **Trigger:** Select `When I log on` → click **Next**
 6. **Action:** Select `Start a program` → click **Next**
-7. **Program/script:** Type `python`
-8. **Add arguments:** Type the full path to your script. Replace YOUR_USERNAME with your actual Windows username:
+7. **Program/script box:** type exactly:
    ```
-   C:\Users\YOUR_USERNAME\Documents\antigravity-watcher\antigravity_watcher.py
+   python
    ```
-   To find your username: open Command Prompt and type `whoami`
+8. **Add arguments box:** type the full path to your script:
+   ```
+   C:\Users\YOUR_USERNAME\Desktop\antigravity-watcher\antigravity_watcher.py
+   ```
+   To find your username: open Command Prompt and type `whoami` — it shows `COMPUTER\username`, use the part after the backslash.
+
+   Easiest way to get the exact path: right-click `antigravity_watcher.py` in VS Code's left panel → **Copy Path** → paste it here.
+
 9. Click **Next** → click **Finish**
 10. ✅ Done. It will now start automatically every time you log in.
-
-To test it worked: restart your computer, and once logged in, open Antigravity IDE — the watcher should already be running in the background.
-
----
-
-### MAC — Login Items
-
-1. Click the **Apple menu** (🍎) in the top left → **System Settings** (or System Preferences on older Macs)
-2. Click **General** → **Login Items**
-3. Click the **+** button under "Open at Login"
-4. You need to add a small helper file. First, create it:
-   - Open VS Code
-   - Create a new file called `start_watcher.command` in your `antigravity-watcher` folder
-   - Paste this into it (replace YOUR_USERNAME with your actual Mac username):
-   ```bash
-   #!/bin/bash
-   cd /Users/YOUR_USERNAME/Documents/antigravity-watcher
-   python3 antigravity_watcher.py
-   ```
-   - Save it
-5. In Terminal, make it executable:
-   ```
-   chmod +x ~/Documents/antigravity-watcher/start_watcher.command
-   ```
-6. Go back to Login Items and click **+** → navigate to your `antigravity-watcher` folder → select `start_watcher.command` → click **Open**
-7. ✅ Done. It will now start automatically when you log into your Mac.
-
----
-
-### LINUX — Startup Applications
-
-1. Open **Startup Applications** from your apps menu (or search for it)
-2. Click **Add**
-3. Fill in:
-   - **Name:** `Antigravity Watcher`
-   - **Command:** `python3 /home/YOUR_USERNAME/Documents/antigravity-watcher/antigravity_watcher.py`
-   - **Comment:** `Auto-focus Antigravity when prompt is done`
-4. Click **Add** / **Save**
-5. ✅ Done.
 
 ---
 
 ## TROUBLESHOOTING
 
-**"python is not recognized" error on Windows:**
-→ Python was not added to PATH during install.
-→ Uninstall Python and reinstall it — this time tick "Add Python to PATH" on the first screen.
+**"python is not recognized"**
+→ Python was not added to PATH. Uninstall and reinstall it — tick "Add Python to PATH" on the first screen.
 
-**Script says "window not found":**
-→ Make sure Antigravity IDE is open before running the script.
-→ Run `python antigravity_watcher.py --list-windows` and find the exact window name.
-→ Use `--window "exact name here"` when running the script.
+**"No template found"**
+→ You haven't run `--capture-done` yet. Do Part 9 first.
 
-**Script detects "done" too quickly / too slowly:**
-→ Use `--stable 6` to wait longer (6 stable seconds), or `--stable 2` to wait less.
+**Template never matches / script watches forever**
+→ Run `--capture-done` again and pick a more distinctive element — something small and unique that only appears when truly done.
+→ Try lowering confidence: `python antigravity_watcher.py --confidence 0.75`
 
-**Window doesn't come to front (stays behind browser):**
-→ Windows: Make sure you didn't deny the focus permission. Try right-clicking the script in Task Scheduler → Run.
-→ Mac: Go to System Settings → Privacy & Security → Accessibility → enable Terminal or VS Code.
-→ Linux: Install wmctrl: `sudo apt install wmctrl xdotool`
+**"Window not found" at startup**
+→ Antigravity must be open before you run the script. Open it first, then run the script.
 
-**Script crashes when I'm not at my computer:**
-→ Add `--stable 8` to give it more time to stabilize before declaring done.
+**Script says it found a match but wrong window comes up**
+→ Restart both Antigravity and the script. The window handle is locked at startup so Antigravity must be open first.
+
+**Window comes up but is not full screen**
+→ This is fixed in the latest version. Make sure you have the newest `antigravity_watcher.py`.
 
 ---
 
-## QUICK REFERENCE — Commands
+## QUICK REFERENCE — All commands
 
 ```bash
-# Basic run
+# Normal use
 python antigravity_watcher.py
 
-# Run with sound alert
+# With a sound alert when done
 python antigravity_watcher.py --sound
 
-# If your window has a different name
-python antigravity_watcher.py --window "Antigravity IDE"
+# One-time setup — capture your done template (redo if Antigravity UI changes)
+python antigravity_watcher.py --capture-done
 
-# See all open windows (to find the right name)
+# See all open window titles
 python antigravity_watcher.py --list-windows
 
-# Wait longer before switching (useful for slow responses)
-python antigravity_watcher.py --stable 6
+# If your Antigravity window has a different title
+python antigravity_watcher.py --window "Antigravity IDE"
+
+# Lower the match sensitivity if template never triggers
+python antigravity_watcher.py --confidence 0.75
 ```
+
+---
+
+## UPDATING ON GITHUB
+
+After making any changes to your files, open the VS Code terminal and run:
+
+```bash
+git add .
+git commit -m "describe what you changed"
+git push
+```
+
+Your GitHub page will update instantly.
+
+If this is your first time pushing to GitHub:
+```bash
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/YOUR_USERNAME/antigravity-watcher.git
+git push -u origin main
+```
+
+Replace `YOUR_USERNAME` with your GitHub username. You can find this by logging into github.com and looking at the top right corner.
