@@ -1,171 +1,124 @@
-# 🚀 Antigravity Watcher
+# Antigravity Watcher
 
-**Automatically brings Antigravity IDE back into focus the moment your prompt finishes — so you can freely browse the web while you wait.**
+**Automatically brings Antigravity IDE back into focus — maximised and front and centre — the moment your prompt finishes. Browse freely while you wait.**
 
 ---
 
-## What does this do?
+## What it does
 
-You type a prompt in Antigravity IDE and hit submit.  
-You switch to your browser and do other things.  
-The moment Antigravity finishes generating — your screen snaps back to it automatically.  
+1. You type a prompt in Antigravity IDE and hit submit
+2. You press Enter in the terminal to start watching
+3. You switch to your browser and do whatever you want
+4. The moment Antigravity finishes — your screen snaps back to it, full screen
 
-No more switching back and forth to check if it's done. No more missing when a response finishes. Just work, and it comes back to you.
+No more tab-switching to check if it's done. It comes to you.
 
 ---
 
 ## How it works
 
-The script takes a screenshot of your Antigravity window every second and generates a pixel fingerprint (MD5 hash). When you submit a prompt, the screen starts changing — that's the signal that Antigravity is working. When the screen stops changing for several seconds in a row, the script knows the response is done. It then uses OS-level commands to bring the Antigravity window to the front of your screen, even if your browser is covering it.
-
-**No browser extension needed. Works with any browser. Works on Windows, Mac, and Linux.**
+Uses Windows' `PrintWindow` API to capture Antigravity's pixels **even when it is hidden behind your browser**. It compares those pixels against a template image you capture once (the "done" state of Antigravity). When they match, it uses `AttachThreadInput` + `SetForegroundWindow` to force-focus the window — bypassing Windows' foreground lock that normally blocks background apps from stealing focus.
 
 ---
 
 ## Requirements
 
+- Windows 10 or 11
 - Python 3.10 or higher
 - Antigravity IDE installed and open
-- 5 minutes to set up
 
 ---
 
 ## Installation
 
-### Step 1 — Clone or download this repo
+### Step 1 — Install Python
 
+1. Go to **https://www.python.org/downloads/**
+2. Click the big Download button
+3. ⚠️ On the first install screen, tick **"Add Python to PATH"** before clicking anything else
+4. Click Install Now
+
+### Step 2 — Download this repo
+
+Click the green **Code** button on this GitHub page → **Download ZIP** → unzip it somewhere easy like your Desktop.
+
+Or if you have Git installed:
 ```bash
 git clone https://github.com/YOUR_USERNAME/antigravity-watcher.git
 cd antigravity-watcher
 ```
 
-Or click the green **Code** button on GitHub → **Download ZIP** → unzip it.
+### Step 3 — Install dependencies
 
----
+Open Command Prompt (press Windows key, type `cmd`, press Enter) and run:
 
-### Step 2 — Install Python libraries
-
-**Windows:**
 ```bash
-pip install Pillow pygetwindow pyautogui
-```
-
-**Mac:**
-```bash
-pip3 install Pillow pygetwindow pyautogui
-```
-
-**Linux:**
-```bash
-pip3 install Pillow pyautogui
-sudo apt install wmctrl xdotool
+pip install Pillow pygetwindow pyautogui opencv-python
 ```
 
 ---
 
-### Step 3 — Find your Antigravity window name
+## Setup (one time only)
 
-Run this to see all open windows on your computer:
+**Make sure Antigravity IDE is open and showing its "done" state** (a finished prompt, not mid-generation).
 
+Run:
 ```bash
-python antigravity_watcher.py --list-windows
+python antigravity_watcher.py --capture-done
 ```
 
-Look for your Antigravity IDE in the list. The script automatically searches for any window containing the word `Antigravity`, so in most cases you don't need to change anything.
+What happens:
+1. Press Enter in the terminal
+2. You get 5 seconds to switch to Antigravity — do it now
+3. A darkened overlay appears over your screen showing a crosshair
+4. Drag a box around the element that only appears when Antigravity is **truly done** — good choices are:
+   - The send/submit button reappearing
+   - A checkmark or tick icon
+   - The input box becoming active again
+   - Any UI element that is absent during generation
+5. Release — the template saves automatically as `done_template.png`
+
+> **Tip:** Capture something small and distinctive. Avoid the output text area since it changes every run.
 
 ---
 
-### Step 4 — Run the watcher
-
-Make sure Antigravity IDE is open first, then:
+## Usage (every time)
 
 ```bash
 python antigravity_watcher.py
 ```
 
-That's it. Now type your prompt in Antigravity, switch to your browser, and wait.
+**The flow:**
+```
+Step 1 → Type your prompt in Antigravity and hit submit
+Step 2 → Come back to the terminal and press Enter
+Step 3 → Switch to your browser and do whatever you want
+Step 4 → Antigravity pops back up full screen when done
+Step 5 → Press Enter in terminal again for your next prompt
+```
 
 ---
 
-## Usage
+## All commands
 
 ```bash
-# Basic usage
+# Normal use
 python antigravity_watcher.py
 
 # With a sound alert when done
 python antigravity_watcher.py --sound
 
-# If your window title is different from "Antigravity"
-python antigravity_watcher.py --window "Antigravity IDE"
+# One-time setup — capture your done template
+python antigravity_watcher.py --capture-done
 
-# See all open windows to find the right name
+# See all open window titles (to find the right --window name)
 python antigravity_watcher.py --list-windows
 
-# Wait longer before switching (for slower machines or longer responses)
-python antigravity_watcher.py --stable 6
-```
+# If your Antigravity window has a different title
+python antigravity_watcher.py --window "Antigravity IDE"
 
----
-
-## Auto-start on login (run it once, forget about it)
-
-### Windows — Task Scheduler
-
-1. Press Windows key → search **Task Scheduler** → open it
-2. Click **Create Basic Task** on the right
-3. Name: `Antigravity Watcher` → click Next
-4. Trigger: **When I log on** → Next
-5. Action: **Start a program** → Next
-6. Program/script: `python`
-7. Add arguments: `C:\Users\YOUR_USERNAME\Documents\antigravity-watcher\antigravity_watcher.py`
-8. Finish
-
-### Mac — Login Items
-
-1. Apple menu → System Settings → General → Login Items
-2. Create a file called `start_watcher.command` with:
-   ```bash
-   #!/bin/bash
-   cd /Users/YOUR_USERNAME/Documents/antigravity-watcher
-   python3 antigravity_watcher.py
-   ```
-3. Make it executable: `chmod +x start_watcher.command`
-4. Add it to Login Items
-
-### Linux — Startup Applications
-
-1. Open Startup Applications
-2. Click Add
-3. Command: `python3 /home/YOUR_USERNAME/Documents/antigravity-watcher/antigravity_watcher.py`
-4. Save
-
----
-
-## What you'll see when it runs
-
-```
-🚀 Antigravity Watcher Started
-   Looking for window : 'Antigravity'
-   Platform           : Windows
-
-✅ Found window at rect: (0, 0, 1920, 1080)
-
-⏳ Watching for you to submit a prompt...
-   (Type your prompt in Antigravity and hit Enter/Submit)
-
-🟡 Activity detected — Antigravity is working...
-
-   ✈  You can switch to your browser now.
-
-   Still... (1/4)
-   Still... (2/4)
-   Still... (3/4)
-   Still... (4/4)
-
-✅ Response complete! Switching back to Antigravity...
-
-🎉 Done! Antigravity is now in focus.
+# Adjust match sensitivity (default 0.85, lower = easier to match)
+python antigravity_watcher.py --confidence 0.75
 ```
 
 ---
@@ -175,32 +128,26 @@ python antigravity_watcher.py --stable 6
 | Problem | Fix |
 |---|---|
 | `python is not recognized` | Reinstall Python and tick **"Add Python to PATH"** on the first screen |
-| `Window not found` | Make sure Antigravity is open, then run `--list-windows` to find the exact title |
-| Switches too fast | Use `--stable 6` to wait 6 seconds of stability before switching |
-| Window doesn't come to front on Mac | System Settings → Privacy & Security → Accessibility → enable Terminal |
-| Window doesn't come to front on Linux | Run `sudo apt install wmctrl xdotool` |
-| Script crashes | Make sure Antigravity stays open while the script runs |
+| `No template found` | Run `--capture-done` first |
+| Template never matches | Run `--capture-done` again, capture a larger or more distinctive element. Try `--confidence 0.75` |
+| Window not found at startup | Make sure Antigravity is open before running the script |
+| Doesn't switch back to Antigravity | The window handle was lost — restart the script with Antigravity already open |
 
 ---
 
-## How the detection works (technical)
+## How the focus switch works (technical)
 
-The script uses **pixel fingerprinting** — it takes a cropped screenshot of just the Antigravity window, resizes it to a 200×150 thumbnail (to ignore tiny cursor blinks), and computes an MD5 hash. If the hash changes, the screen is changing. If the hash stays the same for `N` consecutive polls (default: 4, meaning 4 seconds), the response is declared done. This approach works universally across any IDE or app without needing API access or browser plugins.
+Windows normally blocks background processes from calling `SetForegroundWindow` — this is why most focus scripts silently fail. This script uses the known workaround:
 
----
+1. `AttachThreadInput` — attaches Python's thread to the browser's input queue, making Windows treat Python as part of the active app
+2. A simulated `Alt` keypress — grants foreground permission
+3. `ShowWindow(SW_MAXIMIZE)` — restores and maximises Antigravity
+4. `SetForegroundWindow` + `BringWindowToTop` + `SetFocus` — brings it to front
 
-## Contributing
-
-Pull requests are welcome. If your version of Antigravity uses a different window title or has a feature like a visible loading spinner, open an issue and share the details — the script can be extended to use DOM-level detection if needed.
+The window is identified by its HWND (a unique Windows handle) locked at startup — not by title — so VS Code or any other window with "antigravity" in its title bar never gets matched by accident.
 
 ---
 
 ## License
 
 MIT — free to use, modify, and share.
-
----
-
-## Author
-
-Built to scratch a personal itch — never stare at a loading screen again.
